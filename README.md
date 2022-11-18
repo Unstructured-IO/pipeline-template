@@ -46,7 +46,7 @@ Give a description of making API calls using example `curl` commands, and exampl
 For example:
 ```
 curl -X 'POST' \
-  'http://localhost:8000/sec-template/v0.0.0/blahblah' \
+  'http://localhost:8000/pipeline-template/v0.0.0/blahblah' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@rgld-10-K-85535-000155837021011343.xbrl' \
