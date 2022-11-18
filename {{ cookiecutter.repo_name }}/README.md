@@ -3,23 +3,25 @@
 </h3>
 
 <h3 align="center">
-  <p>Pre-Processing Pipeline Template</p>
+  <p>Pre-Processing Pipeline for Nothing in Particular</p>
 </h3>
 
 
 The description for the pipeline repository goes here.
 The API is hosted at `https://api.unstructured.io`.
 
-### Updates TODO list
+### TODO list after generating repo from cookiecutter template:
 
 - [ ] Update the pipeline name and description in `README.md` (this file)
-- [ ] Rename all instances of {{ cookiecutter.pipeline_family }} in `README.md` (this file)
-- [ ] Update the pipeline family name and pipeline package in the `Makefile`
-- [ ] Update the pipeline name in `preprocessing-pipeline-family.yaml`
-- [ ] Rename the folders `prepline_template` and `test_template`
-- [ ] Change name of the variable `PIPELINE_FAMILY` at the top of `.github/workflows/ci.yml`
-- [ ] If needed, install additional dependencies in the `Dockerfile`
 - [ ] Add any additional requirements you need to `requirements/base.in` and run `make pip-compile`
+- [ ] Run `make install`
+- [ ] If needed, install additional dependencies in the `Dockerfile`
+- [ ] Create an example notebook in `pipeline-notebooks` that demonstrates pre-processing of a specific data type
+- [ ] Design an API with the notebook by using the special `pipeline-api` cell comments and function definition
+- [ ] Generate the API with `make generate-api`
+- [ ] Update `README.md` (this file) with examples of using the API and python code.
+- [ ] Add tests in `test_{{ cookiecutter.pipeline_package }}`
+- [ ] Delete this checklist
 
 ## Developer Quick Start
 
@@ -46,10 +48,10 @@ Give a description of making API calls using example `curl` commands, and exampl
 For example:
 ```
 curl -X 'POST' \
-  'http://localhost:8000/pipeline-{{ cookiecutter.pipeline_family }}/v0.0.0/blahblah' \
+  'http://localhost:8000/pipeline-{{ cookiecutter.pipeline_family }}/v0.0.0/change-to-real-route' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'file=@rgld-10-K-85535-000155837021011343.xbrl' \
+  -F 'file=@example.pdf' \
   -F 'some_parameter=something'  | jq -C . | less -R
 ```
 
