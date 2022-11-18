@@ -12,6 +12,7 @@ The API is hosted at `https://api.unstructured.io`.
 
 ### TODO list after generating repo from cookiecutter template:
 
+- [ ] `git init`
 - [ ] Update the pipeline name and description in `README.md` (this file)
 - [ ] Add any additional requirements you need to `requirements/base.in` and run `make pip-compile`
 - [ ] Run `make install`
@@ -21,7 +22,7 @@ The API is hosted at `https://api.unstructured.io`.
 - [ ] Generate the API with `make generate-api`
 - [ ] Update `README.md` (this file) with examples of using the API and python code.
 - [ ] Add tests in `test_{{ cookiecutter.pipeline_package }}`
-- [ ] Delete this checklist
+- [ ] Delete this checklist and commit changes
 
 ## Developer Quick Start
 
