@@ -4,7 +4,7 @@
 
 &nbsp;
 
-# Cookcutter Template for Pipeline Family Repositories
+# Cookiecutter Template for Pipeline Family Repositories
 
 This repository serves as a template for creating pipeline family repositories. It makes use of
 [`cookiecutter`](https://github.com/cookiecutter/cookiecutter) to make the process as quick and
