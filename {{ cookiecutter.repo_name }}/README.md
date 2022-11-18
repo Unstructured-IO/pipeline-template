@@ -13,7 +13,7 @@ The API is hosted at `https://api.unstructured.io`.
 ### Updates TODO list
 
 - [ ] Update the pipeline name and description in `README.md` (this file)
-- [ ] Rename all instances of {{ template }} in `README.md` (this file)
+- [ ] Rename all instances of {{ cookiecutter.pipeline_family }} in `README.md` (this file)
 - [ ] Update the pipeline family name and pipeline package in the `Makefile`
 - [ ] Update the pipeline name in `preprocessing-pipeline-family.yaml`
 - [ ] Rename the folders `prepline_template` and `test_template`
@@ -29,10 +29,10 @@ The API is hosted at `https://api.unstructured.io`.
 	  * `pyenv install 3.8.13`
   * Linux instructions are available [here](https://github.com/Unstructured-IO/community#linux).
 
-  * Create a virtualenv to work in and activate it, e.g. for one named `{{ template }}`:
+  * Create a virtualenv to work in and activate it, e.g. for one named `{{ cookiecutter.pipeline_family }}`:
 
-	`pyenv  virtualenv 3.8.13 {{ template }}` <br />
-	`pyenv activate {{ template }}`
+	`pyenv  virtualenv 3.8.13 {{ cookiecutter.pipeline_family }}` <br />
+	`pyenv activate {{ cookiecutter.pipeline_family }}`
 
 * Run `make install`
 * Start a local jupyter notebook server with `make run-jupyter` <br />
@@ -46,7 +46,7 @@ Give a description of making API calls using example `curl` commands, and exampl
 For example:
 ```
 curl -X 'POST' \
-  'http://localhost:8000/pipeline-template/v0.0.0/blahblah' \
+  'http://localhost:8000/pipeline-{{ cookiecutter.pipeline_family }}/v0.0.0/blahblah' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@rgld-10-K-85535-000155837021011343.xbrl' \
@@ -61,7 +61,7 @@ You can generate the FastAPI APIs from your pipeline notebooks by running `make 
 
 ## Security Policy
 
-See our [security policy](https://github.com/Unstructured-IO/pipeline-{{ template }}/security/policy) for
+See our [security policy](https://github.com/Unstructured-IO/pipeline-{{ cookiecutter.pipeline_family }}/security/policy) for
 information on how to report security vulnerabilities.
 
 ## Learn more

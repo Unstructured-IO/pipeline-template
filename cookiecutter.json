@@ -1,0 +1,6 @@
+{
+    "pipeline_family": "template",
+    "repo_name": "pipeline-{{ cookiecutter.pipeline_family }}",
+    "shortname": "{{ cookiecutter.pipeline_family }}",
+    "pipeline_package": "{{ cookiecutter.pipeline_family.lower().replace('-', '_') }}"
+}
