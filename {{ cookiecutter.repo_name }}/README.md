@@ -49,10 +49,10 @@ Give a description of making API calls using example `curl` commands, and exampl
 For example:
 ```
 curl -X 'POST' \
-  'http://localhost:8000/pipeline-{{ cookiecutter.pipeline_family }}/v0.0.0/change-to-real-route' \
+  'http://localhost:8000/pipeline-{{ cookiecutter.pipeline_family }}/v0.0.1/hello-world' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'file=@example.pdf' \
+  -F 'files=@example.pdf' \
   -F 'some_parameter=something'  | jq -C . | less -R
 ```
 
