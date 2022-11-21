@@ -14,6 +14,7 @@ The API is hosted at `https://api.unstructured.io`.
 
 - [ ] `git init`
 - [ ] Update the pipeline name and description in `README.md` (this file)
+- [ ] In a fresh Python environment, run `pip install pip-tools`
 - [ ] Add any additional requirements you need to `requirements/base.in` and run `make pip-compile`
 - [ ] Run `make install`
 - [ ] If needed, install additional dependencies in the `Dockerfile`
