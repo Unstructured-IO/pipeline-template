@@ -8,7 +8,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.8"
-  PIPELINE_FAMILY: "template"
+  PIPELINE_FAMILY: "{{ cookiecutter.shortname }}"
 
 jobs:
   setup:
@@ -20,15 +20,15 @@ jobs:
       with:
         path: |
           .venv
-        key: ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
+        key: {% raw %}ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}{% endraw %}
+    - name: {% raw %}Set up Python ${{ env.PYTHON_VERSION }}{% endraw %}
       uses: actions/setup-python@v4
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python-version: {% raw %}${{ env.PYTHON_VERSION }}{% endraw %}
     - name: Setup virtual environment (no cache hit)
       if: steps.virtualenv-cache.outputs.cache-hit != 'true'
       run: |
-        python${{ env.PYTHON_VERSION }} -m venv .venv
+        {% raw %}python${{ env.PYTHON_VERSION }} -m venv .venv{% endraw %}
         source .venv/bin/activate
         make install
 
@@ -42,7 +42,7 @@ jobs:
       with:
         path: |
           .venv
-        key: ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}
+        key: {% raw %}ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}{% endraw %}
     - name: Lint
       run: |
         source .venv/bin/activate
@@ -65,7 +65,7 @@ jobs:
       with:
         path: |
           .venv
-        key: ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}
+        key: {% raw %}ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}{% endraw %}
     - name: Run core tests
       run: |
         source .venv/bin/activate
@@ -100,7 +100,7 @@ jobs:
       with:
         path: |
           .venv
-        key: ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}
+        key: {% raw %}ci-venv-${{ env.PIPELINE_FAMILY }}-${{ hashFiles('requirements/*.txt') }}{% endraw %}
     - name: API Consistency
       run: |
         source .venv/bin/activate

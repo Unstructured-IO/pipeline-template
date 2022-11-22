@@ -45,7 +45,7 @@ while getopts ":hcs:f:" opt; do
             getopts-extra "$@"
             args=( "${OPTARG[@]}" )
             # validate length of args, should be 2
-            if [ ${#args[@]} -eq 2 ]; then
+            if {{ '[ ${#args[@]} -eq 2 ];' }} then
                 FILES_TO_CHECK+=( "${args[0]}" )
                 REPLACEMENT_FORMATS+=( "${args[1]}" )
             else
