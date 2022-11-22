@@ -17,13 +17,12 @@ The API is hosted at `https://api.unstructured.io`.
 - [ ] In a fresh Python environment, run `pip install pip-tools`
 - [ ] Add any additional requirements you need to `requirements/base.in` and run `make pip-compile`
 - [ ] Run `make install`
-- [ ] If needed, install additional dependencies in the `Dockerfile`
-- [ ] Create an example notebook in `pipeline-notebooks` that demonstrates pre-processing of a specific data type
-- [ ] Design an API with the notebook by using the special `pipeline-api` cell comments and function definition
+- [ ] Create a preprocessing pipeline notebook in pipeline-notebooks relevant to your project. A barebones sample notebook `pipeline-notebooks/pipeline-hello-world.ipynb` is provided for reference
 - [ ] Generate the API with `make generate-api`
 - [ ] Update `README.md` (this file) with examples of using the API and python code.
 - [ ] Add tests in `test_{{ cookiecutter.pipeline_package }}`
 - [ ] Delete this checklist and commit changes
+- [ ] If needed, install additional dependencies in the `Dockerfile`. Note that the Dockerfile is provided for convenience and is not a hard requirement for local development. If that convenience provides little value to your audience, removal of the Dockerfile is another option.
 
 ## Developer Quick Start
 
