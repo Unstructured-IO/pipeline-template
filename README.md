@@ -20,7 +20,7 @@ repositories.
 
         This repo need not be cloned to use its template functionality. To generate a new repo from template:
         1. Make sure `cookiecutter` is installed in your current environment (`pip install cookiecutter` will install it)
-        1. Run `cookiecutter https://github.com/Unstructured-IO/pipeline-template`
+        1. Run `cookiecutter git@github.com:Unstructured-IO/pipeline-template.git`
 
     1. Generating a repo from this template after cloning this repo:
 
