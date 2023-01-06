@@ -61,7 +61,7 @@ ghapi==1.0.3
     # via nbdev
 importlib-metadata==5.0.0
     # via nbconvert
-importlib-resources==5.10.0
+importlib-resources==5.10.2
     # via jsonschema
 ipykernel==6.15.3
     # via
