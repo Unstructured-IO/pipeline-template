@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 
 @pytest.fixture()
 def test_client():
-    from prepline_{{ cookiecutter.pipeline_package }}.api.hello_world import app
+    from prepline_{{ cookiecutter.pipeline_package }}.api.process_file import app
 
     return TestClient(app)
 
@@ -50,7 +50,7 @@ files = [
 def test_pipeline_1(test_client, files, some_parameters, status_code, headers):
     files = [*files, ("some_parameters", (None, some_parameters))]
     response = test_client.post(
-        "/{{ cookiecutter.pipeline_package }}/v0.0.1/hello-world", files=files, headers=headers if headers else None
+        "/{{ cookiecutter.pipeline_package }}/v0.0.1/process-file", files=files, headers=headers if headers else None
     )
     assert response.status_code == status_code
 
