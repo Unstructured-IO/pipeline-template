@@ -16,9 +16,9 @@ files = [
     (
         "text_files",
         (
-            "pepg-S-1-1835597-000119312522106884.xbrl",
+            "sample2.txt",
             open(
-                "test_{{ cookiecutter.pipeline_package }}/test_docs/pepg-S-1-1835597-000119312522106884.xbrl",
+                "test_{{ cookiecutter.pipeline_package }}/test_docs/sample2.txt",
                 "rb",
             ),
             "application/octet-stream",
@@ -27,9 +27,9 @@ files = [
     (
         "text_files",
         (
-            "rgld-10-K-85535-000155837021011343.xbrl",
+            "sample2.txt",
             open(
-                "test_{{ cookiecutter.pipeline_package }}/test_docs/rgld-10-K-85535-000155837021011343.xbrl",
+                "test_{{ cookiecutter.pipeline_package }}/test_docs/sample2.txt",
                 "rb",
             ),
             "application/octet-stream",
