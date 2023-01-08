@@ -28,15 +28,13 @@ RATE_LIMIT = os.environ.get("PIPELINE_API_RATE_LIMIT", "1/second")
 
 
 # pipeline-api
-message = "hello world"
-
-
 def pipeline_api(
     file,
+    filename=None,
     file_content_type=None,
     m_some_parameters=[],
 ):
-    return f"{message}: {' '.join(m_some_parameters)}"
+    return f"{':'.join([filename, file_content_type, str(len(file.read()))])}"
 
 
 class MultipartMixedResponse(StreamingResponse):
@@ -125,6 +123,7 @@ async def pipeline_1(
                     response = pipeline_api(
                         _file,
                         m_some_parameters=some_parameters,
+                        filename=file.filename,
                         file_content_type=file.content_type,
                     )
                     if type(response) not in [str, bytes]:
@@ -142,6 +141,7 @@ async def pipeline_1(
             response = pipeline_api(
                 _file,
                 m_some_parameters=some_parameters,
+                filename=file.filename,
                 file_content_type=file.content_type,
             )
 
