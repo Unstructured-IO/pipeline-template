@@ -5,38 +5,36 @@
 
 import os
 from typing import List, Union
-
-from fastapi import status, FastAPI, File, Form, Request, UploadFile
+from fastapi import status, FastAPI, File, Form, Request, UploadFile, APIRouter
 from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from fastapi.responses import PlainTextResponse
-
-limiter = Limiter(key_func=get_remote_address)
-app = FastAPI()
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-
-RATE_LIMIT = os.environ.get("PIPELINE_API_RATE_LIMIT", "1/second")
-
-# pipeline-api
-message = "hello world"
-
-
-def pipeline_api(
-    file,
-    file_content_type=None,
-    m_some_parameters=[],
-):
-    return f"{message}: {' '.join(m_some_parameters)}"
-
-
 import json
 from fastapi.responses import StreamingResponse
 from starlette.types import Send
 from base64 import b64encode
 from typing import Optional, Mapping, Iterator, Tuple
 import secrets
+
+
+limiter = Limiter(key_func=get_remote_address)
+app = FastAPI()
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+router = APIRouter()
+
+RATE_LIMIT = os.environ.get("PIPELINE_API_RATE_LIMIT", "1/second")
+
+
+# pipeline-api
+def pipeline_api(
+    file,
+    filename=None,
+    file_content_type=None,
+    m_some_parameters=[],
+):
+    return f"{':'.join([filename, file_content_type, str(len(file.read()))])}"
 
 
 class MultipartMixedResponse(StreamingResponse):
@@ -97,7 +95,7 @@ class MultipartMixedResponse(StreamingResponse):
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
 
-@app.post("/{{ cookiecutter.pipeline_family }}/v0.0.1/hello-world")
+@router.post("/{{ cookiecutter.pipeline_family }}/v0.0.1/process-file")
 @limiter.limit(RATE_LIMIT)
 async def pipeline_1(
     request: Request,
@@ -125,6 +123,7 @@ async def pipeline_1(
                     response = pipeline_api(
                         _file,
                         m_some_parameters=some_parameters,
+                        filename=file.filename,
                         file_content_type=file.content_type,
                     )
                     if type(response) not in [str, bytes]:
@@ -142,6 +141,7 @@ async def pipeline_1(
             response = pipeline_api(
                 _file,
                 m_some_parameters=some_parameters,
+                filename=file.filename,
                 file_content_type=file.content_type,
             )
 
@@ -157,3 +157,6 @@ async def pipeline_1(
 @app.get("/healthcheck", status_code=status.HTTP_200_OK)
 async def healthcheck(request: Request):
     return {"healthcheck": "HEALTHCHECK STATUS: EVERYTHING OK!"}
+
+
+app.include_router(router)
