@@ -49,10 +49,10 @@ files = [
 )
 def test_pipeline_1(test_client, files, some_parameters, status_code, headers):
     response = test_client.post(
-        "/{{ cookiecutter.pipeline_package }}/v0.0.1/process-file", 
-        files=files, 
-        data={"some_parameters": some_parameters}, 
-        headers=headers if headers else None
+        "/{{ cookiecutter.pipeline_package }}/v0.0.1/process-file",
+        files=files,
+        data={"some_parameters": some_parameters},
+        headers=headers if headers else None,
     )
     assert response.status_code == status_code
 
