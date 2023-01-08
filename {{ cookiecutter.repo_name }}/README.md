@@ -17,7 +17,7 @@ The API is hosted at `https://api.unstructured.io`.
 - [ ] In a fresh Python environment, run `pip install pip-tools`
 - [ ] Add any additional requirements you need to `requirements/base.in` and run `make pip-compile`
 - [ ] Run `make install`
-- [ ] Create a preprocessing pipeline notebook in pipeline-notebooks relevant to your project. A barebones sample notebook `pipeline-notebooks/pipeline-hello-world.ipynb` is provided for reference
+- [ ] Create a preprocessing pipeline notebook in pipeline-notebooks relevant to your project. Two barebones sample notebooks `pipeline-notebooks/pipeline-process-text.ipynb` and `pipeline-notebooks/pipeline-process-file.ipynb` are provided for reference demonstrating a text processing pipeline and a file processing pipeline respectively.
 - [ ] Generate the API with `make generate-api`
 - [ ] Update `README.md` (this file) with examples of using the API and python code.
 - [ ] Add tests in `test_{{ cookiecutter.pipeline_package }}`
