@@ -11,8 +11,7 @@ handle_error () {
 }
 
 cleanup () { 
-    echo "Cleaning up..."
-    rm -rf $ROOT_DIR/pipeline-$PROJECT_NAME;
+    echo "Run \"rm -rf $ROOT_DIR/pipeline-$PROJECT_NAME\" to clean up the generated pipeline repository.";
 }
 
 check_generated_api_diff() {
@@ -26,6 +25,9 @@ check_generated_api_diff() {
 trap 'cleanup' EXIT
 trap 'handle_error' ERR
 
+# Generate a new pipeline repo. 
+# Extra whitespace lines in command input to accept defaults after entering Project Name
+rm -rf pipeline-$PROJECT_NAME
 make generate-repo << EOF
 $PROJECT_NAME
 
@@ -33,17 +35,19 @@ $PROJECT_NAME
 
 EOF
 
+# Change directory to the generated repo and set up the project
 cd pipeline-$PROJECT_NAME
 python3 -m pip install virtualenv
 python3 -m virtualenv venv
 source venv/bin/activate
+make pip-compile
 make install
 
+# Run required checks
 make check
 make tidy
 make check-notebooks
-
 check_generated_api_diff
 
+# Run tests
 make test
-
