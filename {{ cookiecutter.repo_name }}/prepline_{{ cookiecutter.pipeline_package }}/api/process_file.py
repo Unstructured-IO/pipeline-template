@@ -106,7 +106,11 @@ async def pipeline_1(
 
     if isinstance(files, list) and len(files):
         if len(files) > 1:
-            if content_type and content_type not in ["*/*", "multipart/mixed"]:
+            if content_type and content_type not in [
+                "*/*",
+                "multipart/mixed",
+                "application/json",
+            ]:
                 return PlainTextResponse(
                     content=(
                         f"Conflict in media type {content_type}"
@@ -115,7 +119,7 @@ async def pipeline_1(
                     status_code=status.HTTP_406_NOT_ACCEPTABLE,
                 )
 
-            def response_generator():
+            def response_generator(is_multipart):
                 for file in files:
 
                     _file = file.file
@@ -126,13 +130,17 @@ async def pipeline_1(
                         filename=file.filename,
                         file_content_type=file.content_type,
                     )
-                    if type(response) not in [str, bytes]:
-                        response = json.dumps(response)
+                    if is_multipart:
+                        if type(response) not in [str, bytes]:
+                            response = json.dumps(response)
                     yield response
 
-            return MultipartMixedResponse(
-                response_generator(),
-            )
+            if content_type == "multipart/mixed":
+                return MultipartMixedResponse(
+                    response_generator(is_multipart=True),
+                )
+            else:
+                return response_generator(is_multipart=False)
         else:
 
             file = files[0]
