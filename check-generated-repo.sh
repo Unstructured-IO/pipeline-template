@@ -45,6 +45,7 @@ cd pipeline-$PROJECT_NAME
 python3 -m pip install virtualenv
 python3 -m virtualenv venv
 source venv/bin/activate
+pip3 install pip-tools
 make pip-compile
 make install
 
