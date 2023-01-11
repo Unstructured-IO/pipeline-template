@@ -23,7 +23,7 @@ check_generated_api_diff() {
     mkdir -p pregenerated_prepline_$PROJECT_NAME/api
     mv prepline_$PROJECT_NAME/api/* pregenerated_prepline_$PROJECT_NAME/api/
     make generate-api
-    diff -x "__pycache__" prepline_$PROJECT_NAME/api pregenerated_prepline_$PROJECT_NAME/api
+    diff -x "__pycache__" -u prepline_$PROJECT_NAME/api pregenerated_prepline_$PROJECT_NAME/api
     rm -rf pregenerated_prepline_$PROJECT_NAME/api
 }
 
