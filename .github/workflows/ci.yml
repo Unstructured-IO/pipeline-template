@@ -16,5 +16,6 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+      - name: run the check
         run: |
           python${{ env.PYTHON_VERSION }} -m venv .venv
