@@ -23,7 +23,6 @@ jobs:
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Check generated repo
+      - name: Check docker commands
         run: |
           ./scripts/docker-validate.sh
-	
