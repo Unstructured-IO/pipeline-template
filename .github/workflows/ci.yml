@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Check generated repo
         run: |
           make install
+          ./check-generate-repo.sh
