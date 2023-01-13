@@ -18,9 +18,3 @@ jobs:
         python-version: ${{ env.PYTHON_VERSION }}
     - run: |
         python${{ env.PYTHON_VERSION }} -m venv .venv
-#     - name: Check generated repo
-#       run: |
-#         python${{ env.PYTHON_VERSION }} -m venv .venv
-#         source .venv/bin/activate
-# 	 make install
-#./check-generated-repo.sh
