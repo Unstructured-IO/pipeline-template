@@ -9,7 +9,7 @@ env:
   PYTHON_VERSION: "3.8"
 
 jobs:
-  check-generate-repo.sh:
+  check-generate-repo:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
