@@ -17,7 +17,7 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
     - run: |
-      python${{ env.PYTHON_VERSION }} -m venv .venv
+        python${{ env.PYTHON_VERSION }} -m venv .venv
 #     - name: Check generated repo
 #       run: |
 #         python${{ env.PYTHON_VERSION }} -m venv .venv
