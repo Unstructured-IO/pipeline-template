@@ -13,9 +13,9 @@ cd $SCRIPT_RELATIVE_DIR/../pipeline-$PROJECT_NAME
 
 make docker-build
 rm -f jupyter.out
-make docker-start-jupyter > jupyter.out 2>&1 &
+make docker-start-jupyter 2>&1 | tee jupyter.out &
 
-sleep 5
+sleep 15
 
 if ! grep -q 'Jupyter Notebook .* is running at' jupyter.out ; then
     echo "Jupyter notebook did not appear to start correctly"
