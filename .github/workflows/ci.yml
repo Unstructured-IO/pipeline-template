@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-    - '*'
+      - '*'
 
 env:
   PYTHON_VERSION: "3.8"
@@ -12,14 +12,14 @@ jobs:
   check-generate-repo.sh:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-#    - name: Check generated repo
-#      run: |
-#        python${{ env.PYTHON_VERSION }} -m venv .venv
-#        source .venv/bin/activate
-#	make install
-#	./check-generated-repo.sh
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+     - name: Check generated repo
+       run: |
+         python${{ env.PYTHON_VERSION }} -m venv .venv
+         source .venv/bin/activate
+ 	make install
+ 	./check-generated-repo.sh
