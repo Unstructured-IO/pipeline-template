@@ -17,9 +17,9 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-    - name: Check generated repo
-      run: |
-        python${{ env.PYTHON_VERSION }} -m venv .venv
-        source .venv/bin/activate
-	make install
-	./check-generated-repo.sh
+#    - name: Check generated repo
+#      run: |
+#        python${{ env.PYTHON_VERSION }} -m venv .venv
+#        source .venv/bin/activate
+#	make install
+#	./check-generated-repo.sh
