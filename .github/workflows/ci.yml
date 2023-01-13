@@ -19,4 +19,4 @@ jobs:
       - name: Check generated repo
         run: |
           make install
-          ./check-generate-repo.sh
+          ./check-generated-repo.sh
