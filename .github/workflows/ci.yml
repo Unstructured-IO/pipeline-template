@@ -26,4 +26,4 @@ jobs:
       - name: Check docker commands
         run: |
           ./scripts/docker-validate.sh
-	if: matrix.python-version == '3.8'
+	if: ${{ matrix.python-version }} == '3.8'
