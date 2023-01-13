@@ -1,0 +1,31 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  check-generated-repo:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Check generated repo
+        run: |
+          make install
+          ./scripts/check-generated-repo.sh
+      - name: Set up QEMU
+        if: matrix.python-version == '3.8'
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        if: matrix.python-version == '3.8'
+        uses: docker/setup-buildx-action@v2
+      - name: Check docker commands
+        if: matrix.python-version == '3.8'
+        run: |
+          ./scripts/docker-validate.sh
