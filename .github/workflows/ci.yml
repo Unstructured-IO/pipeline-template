@@ -12,9 +12,9 @@ jobs:
   check-generated-repo:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    - run: |
-        python${{ env.PYTHON_VERSION }} -m venv .venv
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+        run: |
+          python${{ env.PYTHON_VERSION }} -m venv .venv
