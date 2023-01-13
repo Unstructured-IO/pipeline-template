@@ -6,7 +6,7 @@
 
 PROJECT_NAME=testproject
 SCRIPT_RELATIVE_DIR=$(dirname "${BASH_SOURCE[0]}")
-cd $SCRIPT_RELATIVE_DIR
+cd $SCRIPT_RELATIVE_DIR/..
 ROOT_DIR=$(pwd)
 
 set -e
