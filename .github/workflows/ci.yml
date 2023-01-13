@@ -21,8 +21,11 @@ jobs:
           ./scripts/check-generated-repo.sh
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+	if: matrix.python_version == '3.8'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+	if: matrix.python_version == '3.8'
       - name: Check docker commands
         run: |
           ./scripts/docker-validate.sh
+	if: matrix.python_version == '3.8'
