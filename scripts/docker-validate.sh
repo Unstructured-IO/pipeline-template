@@ -12,6 +12,7 @@ SCRIPT_RELATIVE_DIR=$(dirname "${BASH_SOURCE[0]}")
 cd $SCRIPT_RELATIVE_DIR/../pipeline-$PROJECT_NAME
 
 make docker-build
+docker images
 rm -f jupyter.out
 make docker-start-jupyter 2>&1 | tee jupyter.out &
 
