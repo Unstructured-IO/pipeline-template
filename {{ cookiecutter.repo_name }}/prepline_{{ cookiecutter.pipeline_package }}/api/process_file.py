@@ -121,7 +121,6 @@ async def pipeline_1(
 
             def response_generator(is_multipart):
                 for file in files:
-
                     _file = file.file
 
                     response = pipeline_api(
@@ -142,7 +141,6 @@ async def pipeline_1(
             else:
                 return response_generator(is_multipart=False)
         else:
-
             file = files[0]
             _file = file.file
 
