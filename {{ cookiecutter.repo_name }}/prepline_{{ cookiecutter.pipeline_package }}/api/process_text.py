@@ -6,9 +6,6 @@
 import os
 from typing import List, Union
 from fastapi import status, FastAPI, File, Form, Request, UploadFile, APIRouter
-from slowapi.errors import RateLimitExceeded
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.util import get_remote_address
 from fastapi.responses import PlainTextResponse
 import json
 from fastapi.responses import StreamingResponse
@@ -21,13 +18,8 @@ from unstructured.staging.base import convert_to_isd, convert_to_isd_csv
 from unstructured.staging.label_studio import stage_for_label_studio
 
 
-limiter = Limiter(key_func=get_remote_address)
 app = FastAPI()
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 router = APIRouter()
-
-RATE_LIMIT = os.environ.get("PIPELINE_API_RATE_LIMIT", "1/second")
 
 
 def is_expected_response_type(media_type, response_type):
@@ -110,8 +102,7 @@ class MultipartMixedResponse(StreamingResponse):
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
 
-@router.post("/{{ cookiecutter.pipeline_family }}/v0.0.1/process-text")
-@limiter.limit(RATE_LIMIT)
+@router.post("/{ cookiecutter.pipeline_family }}/v0/process-text")
 async def pipeline_1(
     request: Request,
     text_files: Union[List[UploadFile], None] = File(default=None),
