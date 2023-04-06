@@ -87,7 +87,7 @@ class MultipartMixedResponse(StreamingResponse):
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
 
-@router.post("/{ cookiecutter.pipeline_family }}/v0/process-file")
+@router.post("/{ cookiecutter.pipeline_family }}/v0.0.1/process-file")
 async def pipeline_1(
     request: Request,
     files: Union[List[UploadFile], None] = File(default=None),
