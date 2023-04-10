@@ -14,6 +14,7 @@ app = FastAPI(
     title="Unstructured Pipeline API",
     description="""""",
     version="1.0.0",
+    docs_url="/{{ cookiecutter.pipeline_family }}/docs
 )
 
 app.include_router(process_file_router)
