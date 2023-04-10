@@ -156,8 +156,8 @@ def ungz_file(file: UploadFile) -> UploadFile:
     )
 
 
-@router.post("/{ cookiecutter.pipeline_family }}/v0/process-text")
-@router.post("/{ cookiecutter.pipeline_family }}/v0.0.1/process-text")
+@router.post("/{{ cookiecutter.pipeline_family }}/v0/process-text")
+@router.post("/{{ cookiecutter.pipeline_family }}/v0.0.1/process-text")
 def pipeline_1(
     request: Request,
     text_files: Union[List[UploadFile], None] = File(default=None),
