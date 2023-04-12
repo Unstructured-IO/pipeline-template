@@ -60,10 +60,3 @@ def test_pipeline_1(test_client, files, output_format, output_schema, status_cod
         "/{{ cookiecutter.pipeline_package }}/v0.0.1/process-text", files=files, headers=headers if headers else None
     )
     assert response.status_code == status_code
-
-
-@pytest.mark.skip(reason="/healthcheck does not exist for pipeline notebook api yet")
-def test_healthcheck(test_client):
-    response = test_client.get("/healthcheck")
-    assert response.status_code == 200
-    assert response.json() == {"healthcheck": "HEALTHCHECK STATUS: EVERYTHING OK!"}
