@@ -39,7 +39,37 @@ def pipeline_api(
     file_content_type=None,
     m_some_parameters=[],
 ):
-    return f"{':'.join([filename, file_content_type, str(len(file.read()))])}"
+    return f"{':'.join([filename, str(file_content_type), str(len(file.read()))])}"
+
+
+def get_validated_mimetype(file):
+    """
+    Return a file's mimetype, either via the file.content_type or the mimetypes lib if that's too
+    generic. If the user has set UNSTRUCTURED_ALLOWED_MIMETYPES, validate against this list and
+    return HTTP 400 for an invalid type.
+    """
+    content_type = file.content_type
+    if not content_type or content_type == "application/octet-stream":
+        content_type = mimetypes.guess_type(str(file.filename))[0]
+
+        # Markdown mimetype is too new for the library - just hardcode that one in for now
+        if not content_type and ".md" in file.filename:
+            content_type = "text/markdown"
+
+    allowed_mimetypes_str = os.environ.get("UNSTRUCTURED_ALLOWED_MIMETYPES")
+    if allowed_mimetypes_str is not None:
+        allowed_mimetypes = allowed_mimetypes_str.split(",")
+
+        if content_type not in allowed_mimetypes:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"Unable to process {file.filename}: "
+                    f"File type {content_type} is not supported."
+                ),
+            )
+
+    return content_type
 
 
 def get_validated_mimetype(file):
