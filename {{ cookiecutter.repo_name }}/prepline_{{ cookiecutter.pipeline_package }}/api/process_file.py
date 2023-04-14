@@ -39,7 +39,7 @@ def pipeline_api(
     file_content_type=None,
     m_some_parameters=[],
 ):
-    return f"{':'.join([filename, file_content_type, str(len(file.read()))])}"
+    return f"{':'.join([filename, str(file_content_type), str(len(file.read()))])}"
 
 
 def get_validated_mimetype(file):
