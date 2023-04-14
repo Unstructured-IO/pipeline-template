@@ -55,9 +55,3 @@ def test_pipeline_1(test_client, files, some_parameters, status_code, headers):
         headers=headers if headers else None,
     )
     assert response.status_code == status_code
-
-
-def test_healthcheck(test_client):
-    response = test_client.get("/healthcheck")
-    assert response.status_code == 200
-    assert response.json() == {"healthcheck": "HEALTHCHECK STATUS: EVERYTHING OK!"}

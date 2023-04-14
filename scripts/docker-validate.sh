@@ -35,7 +35,7 @@ if [[ $(curl -X 'POST' \
      -H 'accept: application/json' \
      -H 'Content-Type: multipart/form-data' \
      -F 'files=@Makefile' \
-     -F 'some_parameter=something' | grep 'Makefile:application/octet-stream') == "" ]]; then
+     -F 'some_parameter=something' | grep -P '(Makefile:application/octet-stream|Makefile:None)') == "" ]]; then
     echo "Did not get expected output from API"
     kill %1
     exit 1

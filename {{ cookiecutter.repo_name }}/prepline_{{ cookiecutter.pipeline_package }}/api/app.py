@@ -6,27 +6,22 @@
 
 from fastapi import FastAPI, Request, status
 
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
-
 from .process_file import router as process_file_router
 from .process_text import router as process_text_router
 
 
-limiter = Limiter(key_func=get_remote_address)
 app = FastAPI(
     title="Unstructured Pipeline API",
     description="""""",
     version="1.0.0",
+    docs_url="/{{ cookiecutter.pipeline_family }}/docs",
+    openapi_url="/{{ cookiecutter.pipeline_family }}/openapi.json",    
 )
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.include_router(process_file_router)
 app.include_router(process_text_router)
 
 
-@app.get("/healthcheck", status_code=status.HTTP_200_OK)
-async def healthcheck(request: Request):
+@app.get("/healthcheck", status_code=status.HTTP_200_OK, include_in_schema=False)
+def healthcheck(request: Request):
     return {"healthcheck": "HEALTHCHECK STATUS: EVERYTHING OK!"}
