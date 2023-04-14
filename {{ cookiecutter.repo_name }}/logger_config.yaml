@@ -29,9 +29,13 @@ loggers:
       - access_handler
     propagate: no
     # disable logging for uvicorn.access by not having a handler
+  unstructured_inference:
+    level: DEBUG
+    handlers:
+      - standard_handler
+    propagate: no
   unstructured:
     level: INFO
     handlers:
       - standard_handler
     propagate: no
-
