@@ -35,5 +35,6 @@ COPY exploration-notebooks exploration-notebooks
 COPY pipeline-notebooks pipeline-notebooks
 
 
-RUN python3.8 -m pip install --no-cache -r requirements-base.txt \
-  && python3.8 -m pip install --no-cache -r requirements-dev.txt
+RUN python3.8 -m pip install pip==${PIP_VERSION} \
+  && python3.8 install --no-cache -r requirements-base.txt \
+  && python3.8 install --no-cache -r requirements-dev.txt
