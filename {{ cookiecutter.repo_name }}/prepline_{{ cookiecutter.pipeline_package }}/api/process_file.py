@@ -130,14 +130,23 @@ class MultipartMixedResponse(StreamingResponse):
         await send({"type": "http.response.body", "body": b"", "more_body": False})
 
 
-def ungz_file(file: UploadFile) -> UploadFile:
+def ungz_file(file: UploadFile, gz_uncompressed_content_type=None) -> UploadFile:
+    def return_content_type(filename):
+        if gz_uncompressed_content_type:
+            return gz_uncompressed_content_type
+        else:
+            return str(mimetypes.guess_type(filename)[0])
+
     filename = str(file.filename) if file.filename else ""
-    gzip_file = gzip.open(file.file)
+    if filename.endswith(".gz"):
+        filename = filename[:-3]
+
+    gzip_file = gzip.open(file.file).read()
     return UploadFile(
-        file=io.BytesIO(gzip_file.read()),
-        size=len(gzip_file.read()),
-        filename=filename[:-3] if len(filename) > 3 else "",
-        headers=Headers({"content-type": str(mimetypes.guess_type(filename)[0])}),
+        file=io.BytesIO(gzip_file),
+        size=len(gzip_file),
+        filename=filename,
+        headers=Headers({"content-type": return_content_type(filename)}),
     )
 
 
@@ -145,13 +154,16 @@ def ungz_file(file: UploadFile) -> UploadFile:
 @router.post("/{{ cookiecutter.pipeline_family }}/v0.0.1/process-file")
 def pipeline_1(
     request: Request,
+    gz_uncompressed_content_type: Optional[str] = Form(default=None),
     files: Union[List[UploadFile], None] = File(default=None),
     some_parameters: List[str] = Form(default=[]),
 ):
     if files:
         for file_index in range(len(files)):
             if files[file_index].content_type == "application/gzip":
-                files[file_index] = ungz_file(files[file_index])
+                files[file_index] = ungz_file(
+                    files[file_index], gz_uncompressed_content_type
+                )
 
     content_type = request.headers.get("Accept")
 
@@ -162,55 +174,45 @@ def pipeline_1(
                 "multipart/mixed",
                 "application/json",
             ]:
-                return PlainTextResponse(
-                    content=(
+                raise HTTPException(
+                    detail=(
                         f"Conflict in media type {content_type}"
                         ' with response type "multipart/mixed".\n'
                     ),
                     status_code=status.HTTP_406_NOT_ACCEPTABLE,
                 )
 
-            def response_generator(is_multipart):
-                for file in files:
-                    file_content_type = get_validated_mimetype(file)
+        def response_generator(is_multipart):
+            for file in files:
+                file_content_type = get_validated_mimetype(file)
 
-                    _file = file.file
+                _file = file.file
 
-                    response = pipeline_api(
-                        _file,
-                        m_some_parameters=some_parameters,
-                        filename=file.filename,
-                        file_content_type=file_content_type,
-                    )
-                    if is_multipart:
-                        if type(response) not in [str, bytes]:
-                            response = json.dumps(response)
-                    yield response
-
-            if content_type == "multipart/mixed":
-                return MultipartMixedResponse(
-                    response_generator(is_multipart=True),
+                response = pipeline_api(
+                    _file,
+                    m_some_parameters=some_parameters,
+                    filename=file.filename,
+                    file_content_type=file_content_type,
                 )
-            else:
-                return response_generator(is_multipart=False)
-        else:
-            file = files[0]
-            _file = file.file
 
-            file_content_type = get_validated_mimetype(file)
+                if is_multipart:
+                    if type(response) not in [str, bytes]:
+                        response = json.dumps(response)
+                yield response
 
-            response = pipeline_api(
-                _file,
-                m_some_parameters=some_parameters,
-                filename=file.filename,
-                file_content_type=file_content_type,
+        if content_type == "multipart/mixed":
+            return MultipartMixedResponse(
+                response_generator(is_multipart=True),
             )
-
-            return response
-
+        else:
+            return (
+                list(response_generator(is_multipart=False))[0]
+                if len(files) == 1
+                else response_generator(is_multipart=False)
+            )
     else:
-        return PlainTextResponse(
-            content='Request parameter "files" is required.\n',
+        raise HTTPException(
+            detail='Request parameter "files" is required.\n',
             status_code=status.HTTP_400_BAD_REQUEST,
         )
 
