@@ -15,7 +15,7 @@ app = FastAPI(
     description="""""",
     version="1.0.0",
     docs_url="/{{ cookiecutter.pipeline_family }}/docs",
-    openapi_url="/{{ cookiecutter.pipeline_family }}/openapi.json",    
+    openapi_url="/{{ cookiecutter.pipeline_family }}/openapi.json",
 )
 
 app.include_router(process_file_router)
