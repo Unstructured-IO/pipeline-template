@@ -161,9 +161,7 @@ def pipeline_1(
     if files:
         for file_index in range(len(files)):
             if files[file_index].content_type == "application/gzip":
-                files[file_index] = ungz_file(
-                    files[file_index], gz_uncompressed_content_type
-                )
+                files[file_index] = ungz_file(files[file_index], gz_uncompressed_content_type)
 
     content_type = request.headers.get("Accept")
 
